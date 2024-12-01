@@ -1,0 +1,55 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+:root {
+  --color-primary: #1e40af;
+  --color-primary-light: #3b82f6;
+  --color-secondary: #f3f4f6;
+}
+
+body {
+  background-color: var(--color-secondary);
+  color: #333;
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-primary-light {
+  background-color: var(--color-primary-light);
+}
+
+.text-primary {
+  color: var(--color-primary);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    margin: 1cm;
+  }
+
+  .no-print {
+    display: none;
+  }
+
+  button {
+    display: none;
+  }
+
+  /* Ensure the ticket fits on one page */
+  .max-w-4xl {
+    max-width: none;
+  }
+}
+
