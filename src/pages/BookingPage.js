@@ -30,11 +30,18 @@ function BookingPage() {
     'Takoradi Airport'
   ];
 
+  // useEffect(() => {
+  //   if (bookingType === 'round-trip' && selectedOutboundFlight) {
+  //     fetchReturnFlights();
+  //   }
+  // }, [selectedOutboundFlight]);
+
   useEffect(() => {
     if (bookingType === 'round-trip' && selectedOutboundFlight) {
       fetchReturnFlights();
     }
-  }, [selectedOutboundFlight]);
+  }, [bookingType, selectedOutboundFlight, fetchReturnFlights]);
+  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
