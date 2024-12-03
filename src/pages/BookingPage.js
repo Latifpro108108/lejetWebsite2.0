@@ -40,7 +40,7 @@ function BookingPage() {
     if (bookingType === 'round-trip' && selectedOutboundFlight) {
       fetchReturnFlights();
     }
-  }, [bookingType, selectedOutboundFlight, fetchReturnFlights]);
+  }, [bookingType, selectedOutboundFlight]);
   
 
   const handleInputChange = (e) => {
