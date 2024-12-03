@@ -123,6 +123,7 @@ function MonthlyReport() {
 
             console.log('Transformed report data:', transformedData);
             setReportData(transformedData);
+            console.log(reportData)
             toast.success('Report generated successfully');
         } catch (error) {
             console.error('Report generation error:', error);
