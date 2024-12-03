@@ -8,7 +8,6 @@ function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Hero Section */}
       <header className="relative bg-gradient-to-br from-blue-700 via-blue-500 to-green-400 text-white py-16 overflow-hidden">
         <div
           className="absolute inset-0 bg-opacity-30 bg-cover bg-no-repeat bg-center"
@@ -38,7 +37,6 @@ function HomePage() {
         </div>
       </header>
 
-      {/* Features Section */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-6xl mx-auto px-6 md:px-12">
           <div className="grid md:grid-cols-3 gap-8 text-center">
@@ -64,7 +62,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Other Actions Section */}
       <section className="py-16 bg-gradient-to-br from-gray-200 to-gray-300">
         <div className="max-w-xl mx-auto text-center">
           <h2 className="text-4xl font-semibold text-gray-800 mb-8">How can we help you today?</h2>

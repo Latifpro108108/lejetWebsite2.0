@@ -51,49 +51,99 @@ function BookingConfirmation() {
 
   const handleConfirmBooking = async () => {
     try {
-        const token = localStorage.getItem('token');
-        
-        if (!token) {
-            toast.error('Please login to continue');
-            navigate('/login');
-            return;
+      const token = localStorage.getItem('token');
+      
+      if (!token) {
+        toast.error('Please login to continue');
+        navigate('/login');
+        return;
+      }
+
+      const bookingData = {
+        flightId,
+        seatClass: bookingDetails.seatClass,
+        passengers: bookingDetails.passengers,
+        outboundAmount: bookingDetails.outboundAmount,
+        totalAmount: bookingDetails.totalAmount,
+        isRoundTrip: false
+      };
+
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/api/bookings`,
+        bookingData,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
         }
+      );
 
-        const bookingData = {
-            flightId,
-            seatClass: bookingDetails.seatClass,
-            passengers: bookingDetails.passengers,
-            totalAmount: bookingDetails.totalAmount
-        };
+      const bookingId = response.data.booking._id;
 
-        const response = await axios.post(
-            `${process.env.REACT_APP_API_URL}/api/bookings`,
-            bookingData,
-            {
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                    'Content-Type': 'application/json'
-                }
+      if (bookingId) {
+        toast.success('Booking created! Proceeding to payment...');
+        navigate(`/payment/${bookingId}`, {
+          state: {
+            bookingDetails: {
+              bookingId,
+              flightDetails: flight,
+              passengers: bookingDetails.passengers,
+              seatClass: bookingDetails.seatClass,
+              totalAmount: bookingDetails.totalAmount,
+              outboundTicketNumber: response.data.booking.outboundTicketNumber
             }
-        );
-
-        if (response.data.booking) {
-            toast.success('Booking created! Proceeding to payment...');
-            navigate(`/payment/${response.data.booking._id}`, {
-                state: {
-                    bookingDetails: response.data.booking
-                }
-            });
-        }
+          }
+        });
+      } else {
+        throw new Error('Booking ID not received from server');
+      }
     } catch (error) {
-        console.error('Booking error:', error.response?.data || error);
-        toast.error(error.response?.data?.message || 'Error creating booking');
-        
-        if (error.response?.status === 401) {
-            navigate('/login');
-        }
+      console.error('Booking error:', error);
+      toast.error(error.response?.data?.message || 'Error creating booking');
+      
+      if (error.response?.status === 401) {
+        navigate('/login');
+      }
     }
 };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-8">
+        <h2 className="text-2xl font-bold text-red-600">{error}</h2>
+        <button
+          onClick={() => navigate('/booking')}
+          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Return to Booking
+        </button>
+      </div>
+    );
+  }
+
+  if (!flight) {
+    return (
+      <div className="text-center py-8">
+        <h2 className="text-2xl font-bold text-red-600">Flight not found</h2>
+        <button
+          onClick={() => navigate('/booking')}
+          className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+        >
+          Return to Booking
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-3xl font-bold mb-8">Confirm Your Booking</h1>

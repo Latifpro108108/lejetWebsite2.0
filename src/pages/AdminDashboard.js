@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 
@@ -56,7 +56,6 @@ function AdminDashboard() {
     'Saturday',
     'Sunday'
   ];
-
   const fetchAirplanes = useCallback(async () => {
     console.log('Fetching airplanes...');
     try {
@@ -181,6 +180,7 @@ function AdminDashboard() {
       };
     });
   };
+
   const handleAddAirplane = async (e) => {
     console.log('Add Airplane form submitted');
     e.preventDefault();
@@ -219,8 +219,6 @@ function AdminDashboard() {
       }
     }
   };
-
-
   const handleAddFlight = async (e) => {
     e.preventDefault();
     console.log('Add Flight form submitted');
@@ -354,13 +352,22 @@ function AdminDashboard() {
       </div>
     );
   }
+
   console.log('Rendering admin dashboard UI');
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
-
-      {/* Add Airplane Form */}
-      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+      {/* Added Monthly Report Button */}
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <Link 
+          to="/admin/monthly-report"
+          className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors"
+        >
+          View Monthly Report
+        </Link>
+      </div>
+            {/* Add Airplane Form */}
+            <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-2xl font-bold mb-4">Add New Airplane</h2>
         <form onSubmit={(e) => {
           console.log('Airplane form submission initiated');
@@ -515,10 +522,7 @@ function AdminDashboard() {
                       <input
                         type="checkbox"
                         checked={newFlight.recurringDays.includes(day)}
-                        onChange={() => {
-                          console.log('Recurring day toggled:', day);
-                          handleRecurringDayToggle(day);
-                        }}
+                        onChange={() => handleRecurringDayToggle(day)}
                         className="mr-2"
                       />
                       {day}
@@ -533,10 +537,7 @@ function AdminDashboard() {
                     type="date"
                     name="startDate"
                     value={newFlight.startDate}
-                    onChange={(e) => {
-                      console.log('Start date changed:', e.target.value);
-                      handleInputChange(e, setNewFlight);
-                    }}
+                    onChange={(e) => handleInputChange(e, setNewFlight)}
                     required={newFlight.isRecurring}
                     min={new Date().toISOString().split('T')[0]}
                     className="w-full p-2 border rounded"
@@ -548,10 +549,7 @@ function AdminDashboard() {
                     type="date"
                     name="endDate"
                     value={newFlight.endDate}
-                    onChange={(e) => {
-                      console.log('End date changed:', e.target.value);
-                      handleInputChange(e, setNewFlight);
-                    }}
+                    onChange={(e) => handleInputChange(e, setNewFlight)}
                     required={newFlight.isRecurring}
                     min={newFlight.startDate}
                     className="w-full p-2 border rounded"
@@ -560,22 +558,17 @@ function AdminDashboard() {
               </div>
             </>
           ) : (
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block mb-1">Flight Date</label>
-                <input
-                  type="date"
-                  name="departureDate"
-                  value={newFlight.departureDate}
-                  onChange={(e) => {
-                    console.log('Flight date changed:', e.target.value);
-                    handleInputChange(e, setNewFlight);
-                  }}
-                  required={!newFlight.isRecurring}
-                  min={new Date().toISOString().split('T')[0]}
-                  className="w-full p-2 border rounded"
-                />
-              </div>
+            <div>
+              <label className="block mb-1">Flight Date</label>
+              <input
+                type="date"
+                name="departureDate"
+                value={newFlight.departureDate}
+                onChange={(e) => handleInputChange(e, setNewFlight)}
+                required={!newFlight.isRecurring}
+                min={new Date().toISOString().split('T')[0]}
+                className="w-full p-2 border rounded"
+              />
             </div>
           )}
 
@@ -586,10 +579,7 @@ function AdminDashboard() {
                 type="time"
                 name="departureTime"
                 value={newFlight.departureTime}
-                onChange={(e) => {
-                  console.log('Departure time changed:', e.target.value);
-                  handleInputChange(e, setNewFlight);
-                }}
+                onChange={(e) => handleInputChange(e, setNewFlight)}
                 required
                 className="w-full p-2 border rounded"
               />
@@ -600,10 +590,7 @@ function AdminDashboard() {
                 type="time"
                 name="arrivalTime"
                 value={newFlight.arrivalTime}
-                onChange={(e) => {
-                  console.log('Arrival time changed:', e.target.value);
-                  handleInputChange(e, setNewFlight);
-                }}
+                onChange={(e) => handleInputChange(e, setNewFlight)}
                 required
                 className="w-full p-2 border rounded"
               />
@@ -617,10 +604,7 @@ function AdminDashboard() {
                 type="number"
                 name="economyPrice"
                 value={newFlight.economyPrice}
-                onChange={(e) => {
-                  console.log('Economy price changed:', e.target.value);
-                  handleInputChange(e, setNewFlight);
-                }}
+                onChange={(e) => handleInputChange(e, setNewFlight)}
                 required
                 min="0"
                 step="0.01"
@@ -633,10 +617,7 @@ function AdminDashboard() {
                 type="number"
                 name="firstClassPrice"
                 value={newFlight.firstClassPrice}
-                onChange={(e) => {
-                  console.log('First class price changed:', e.target.value);
-                  handleInputChange(e, setNewFlight);
-                }}
+                onChange={(e) => handleInputChange(e, setNewFlight)}
                 required
                 min="0"
                 step="0.01"
@@ -647,10 +628,6 @@ function AdminDashboard() {
 
           <button
             type="submit"
-            onClick={(e) => {
-              console.log('Schedule Flight button clicked');
-              // The form's onSubmit handler will handle the submission
-            }}
             className="w-full bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
           >
             {newFlight.isRecurring ? 'Schedule Recurring Flights' : 'Schedule Flight'}

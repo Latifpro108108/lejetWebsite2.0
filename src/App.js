@@ -15,14 +15,15 @@ import FeedbackPage from './pages/FeedbackPage';
 import AboutPage from './pages/AboutPage';
 import ContactPage from './pages/ContactPage';
 import { AuthProvider } from './contexts/AuthContext';
-import LoadingSpinner from './components/LoadingSpinner'; // Create this component
+import LoadingSpinner from './components/LoadingSpinner'; 
+import MonthlyReport from './components/MonthlyReport';
 
 const styles = {
   container: {
     display: 'flex',
     flexDirection: 'column',
     minHeight: '100vh',
-    backgroundColor: '#f3f4f6' // bg-secondary equivalent
+    backgroundColor: '#f3f4f6' 
   },
   main: {
     flexGrow: 1,
@@ -111,7 +112,7 @@ function App() {
                   <Route path="/feedback" element={<FeedbackPage />} />
                   <Route path="/about" element={<AboutPage />} />
                   <Route path="/contact" element={<ContactPage />} />
-                  <Route 
+                  <Route path="/admin/monthly-report" element={<MonthlyReport />} />                  <Route 
                     path="*" 
                     element={
                       <div style={{ textAlign: 'center', padding: '50px' }}>
