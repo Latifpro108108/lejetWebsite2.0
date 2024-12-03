@@ -6,7 +6,7 @@ import CancelModal from '../components/CancelModal';
 
 function UserDashboard() {
   const [bookings, setBookings] = useState([]);
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [loading, setLoading] = useState(true);
