@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';  // Correct import
 import { AuthContext } from '../contexts/AuthContext';
-
 function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -12,7 +11,9 @@ function LoginPage() {
     e.preventDefault();
     try {
       await login(email, password);
-      navigate('/');  // Corrected navigation
+      alert("Login succesful")
+      navigate('/');
+        // Corrected navigation
     } catch (error) {
       console.error('Error logging in:', error);
       // Handle error (e.g., show error message to user)

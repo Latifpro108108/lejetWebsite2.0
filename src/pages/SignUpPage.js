@@ -1,8 +1,10 @@
 import React, { useState, useContext } from 'react';
  // Correct import
 import { AuthContext } from '../contexts/AuthContext';
+import {useNavigate} from "react-router-dom"
 
 function SignUpPage() {
+  const navigate = useNavigate()
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('user'); 
@@ -12,6 +14,9 @@ function SignUpPage() {
     e.preventDefault();
     try {
       await signup(email, password, role);
+      alert("Registration successful")
+      navigate("/")
+
     } catch (error) {
       console.error('Error signing up:', error);
       // Handle error (e.g., show error message to user)
