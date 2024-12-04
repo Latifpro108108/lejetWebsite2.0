@@ -38,6 +38,7 @@ export const AuthProvider = ({ children }) => {
       return true;
     } catch (error) {
       console.error('Login error:', error);
+      alert(`${error.response.data.message}`)
       throw error;
     }
   };
@@ -52,6 +53,7 @@ export const AuthProvider = ({ children }) => {
       await login(email, password);
     } catch (error) {
       console.error('Signup error:', error);
+      alert(`${error.response.data.message}`)
       throw error;
     }
   };
